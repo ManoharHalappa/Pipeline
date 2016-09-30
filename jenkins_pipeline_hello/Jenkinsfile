@@ -21,12 +21,10 @@ stage 'Checkout'
     env.CHANGE_AUTHOR = "${lines[2]}"
     env.CHANGE_TITLE = "${lines[3]}"
   
-    echo "\
-Building on node: ${env.NODE_NAME}\r\n\
-Job:\r\n\
-  name: ${env.JOB_NAME}\r\n\
-  base name: ${env.JOB_BASE_NAME}\r\n\
-  url ${env.JOB_URL}\r\n\\r\n\
+    echo "\Building on node: ${env.NODE_NAME}\r\n\
+    Job:\r\n\  name: ${env.JOB_NAME}\r\n\
+    base name: ${env.JOB_BASE_NAME}\r\n\
+    url ${env.JOB_URL}\r\n\\r\n\
   
   stage 'Build'
   echo 'Hello World 1'
