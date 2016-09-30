@@ -2,9 +2,11 @@
 
 node {
   
-  stage 'Stage 1'
-  echo 'Hello World 1'
-  stage 'Stage 1'
+  stage 'Checkout'
+  
+      git url:'https://github.com/ManoharHalappa/Pipeline.git'
+  
+  stage 'Build'
   echo 'Hello World 1'
 
 }
