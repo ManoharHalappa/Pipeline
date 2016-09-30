@@ -2,11 +2,39 @@
 
 node {
   
-  stage 'Checkout'
+ wrap([$class: 'TimestamperBuildWrapper']) {
   
-      git url:'https://github.com/ManoharHalappa/Pipeline.git'
+  currentBuild.result = "SUCCESS"
+  
+  try {
+
+stage 'Checkout'
+    checkout scm
+
+    def gitTool = tool name: 'Default', type: 'hudson.plugins.git.GitTool'
+
+    bat "\"${gitTool}\" show -s HEAD --pretty=format:%%h%%n%%ci%%n%%cn%%n%%s > commitinfo"
+    def lines = readFile('commitinfo').split('\\r\\n|\\n|\\r')
+
+    env.CHANGE_ID = "${lines[0]}"
+    env.CHANGE_TIME = "${lines[1]}"
+    env.CHANGE_AUTHOR = "${lines[2]}"
+    env.CHANGE_TITLE = "${lines[3]}"
+  
+    echo "\
+Building on node: ${env.NODE_NAME}\r\n\
+Job:\r\n\
+  name: ${env.JOB_NAME}\r\n\
+  base name: ${env.JOB_BASE_NAME}\r\n\
+  url ${env.JOB_URL}\r\n\
+\r\n\
   
   stage 'Build'
   echo 'Hello World 1'
+
+}
+
+
+}
 
 }
